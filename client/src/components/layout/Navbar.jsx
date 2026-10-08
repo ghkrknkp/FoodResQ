@@ -28,7 +28,6 @@ export default function Navbar() {
               <span className="text-2xl font-bold text-primary-600">FoodResQ</span>
             </Link>
             
-            {/* Desktop Navigation */}
             <div className="hidden md:ml-10 md:flex md:space-x-8">
               <Link to="/browse" className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">
                 Browse Food
@@ -76,7 +75,6 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100"
@@ -93,7 +91,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1">

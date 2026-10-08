@@ -1,20 +1,54 @@
-# FoodResQ
+# FoodResQ 🍱
 
 > Turn surplus food into meaningful impact.
 
+[![MERN Stack](https://img.shields.io/badge/Stack-MERN-brightgreen)]() 
+[![Socket.IO](https://img.shields.io/badge/Real--time-Socket.IO-blue)]()
+[![License](https://img.shields.io/badge/License-MIT-yellow)]()
+
 FoodResQ is a food surplus redistribution platform that connects restaurants, bakeries, cafeterias, and other food providers with NGOs and volunteers to redistribute surplus food before it expires.
 
-## 🎯 Problem
+**🚀 [Quick Start Guide](QUICKSTART.md)** | **📖 [Full Documentation](#documentation)** | **🧪 [Testing Guide](TEST_WORKFLOW.md)**
 
-Food waste is a critical global issue while millions face food insecurity. Surplus food from restaurants and food providers often goes to waste when it could feed those in need.
+---
 
-## ✨ Solution
+## 🎯 The Problem
+
+Food waste is a critical global issue while millions face food insecurity:
+- **1.3 billion tons** of food wasted annually
+- **828 million people** face hunger worldwide  
+- **30%** of all food produced is wasted
+
+Surplus food from restaurants often goes to waste when it could feed those in need.
+
+## ✨ Our Solution
 
 FoodResQ bridges the gap by providing a platform where:
-- **Restaurants** can list surplus food with expiry tracking
-- **NGOs and Volunteers** can browse and claim available food
-- **Real-time notifications** ensure quick response times
-- **Smart workflows** manage quantities and pickup status
+- 🍽️ **Restaurants** can list surplus food with expiry tracking
+- 🤝 **NGOs and Volunteers** can browse and claim available food
+- ⚡ **Real-time notifications** ensure quick response times
+- 📊 **Smart workflows** manage quantities and pickup status
+
+## 🚀 Quick Start
+
+Get FoodResQ running in 5 minutes! See [QUICKSTART.md](QUICKSTART.md) for detailed instructions.
+
+```bash
+# 1. Install dependencies
+npm install && cd client && npm install && cd ../server && npm install
+
+# 2. Configure MongoDB in server/.env
+# Use MongoDB Atlas or local MongoDB
+
+# 3. Start the application
+# Terminal 1: npm run server
+# Terminal 2: npm run client
+# Or both: npm run dev
+
+# 4. Open http://localhost:5173
+```
+
+---
 
 ## 🚀 Features
 
@@ -48,6 +82,17 @@ FoodResQ bridges the gap by providing a platform where:
 - User management overview
 - Activity tracking
 - Impact metrics visualization
+
+---
+
+## 📚 Documentation
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Get running in 5 minutes
+- **[TEST_WORKFLOW.md](TEST_WORKFLOW.md)** - Complete testing procedures  
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Production deployment guide
+- **[API Documentation](#api-documentation)** - REST API endpoints (below)
+
+---
 
 ## 🛠️ Technology Stack
 
