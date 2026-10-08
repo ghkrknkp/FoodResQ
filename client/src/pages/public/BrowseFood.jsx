@@ -4,66 +4,74 @@ import Navbar from '../../components/layout/Navbar';
 import api from '../../services/api';
 
 export default function BrowseFood() {
-  const [listings, setListings] = useState([]);
+  const [foodListings, setFoodListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
   const [filters, setFilters] = useState({
-    search: '',
+    foodName: '',
     category: '',
     location: '',
-    sort: '-createdAt',
+    sortBy: 'createdAt'
   });
-  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    fetchListings();
+    fetchFoodListings();
   }, [filters]);
 
-  const fetchListings = async () => {
-    setLoading(true);
+  const fetchFoodListings = async () => {
     try {
+      setLoading(true);
+      setError(null);
+      
+      // Build query params
       const params = new URLSearchParams();
-      if (filters.search) params.append('search', filters.search);
+      if (filters.foodName) params.append('foodName', filters.foodName);
       if (filters.category) params.append('category', filters.category);
       if (filters.location) params.append('location', filters.location);
-      params.append('sort', filters.sort);
-      params.append('status', 'AVAILABLE');
-
+      if (filters.sortBy) params.append('sortBy', filters.sortBy);
+      
       const response = await api.get(`/food?${params.toString()}`);
       if (response.data.success) {
-        setListings(response.data.data);
-        setTotalCount(response.data.total);
+        setFoodListings(response.data.data || []);
       }
-    } catch (error) {
-      console.error('Error fetching listings:', error);
+    } catch (err) {
+      setError('Failed to load food listings. Please try again.');
+      console.error('Error fetching food listings:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleFilterChange = (key, value) => {
-    setFilters({ ...filters, [key]: value });
+  const handleFilterChange = (name, value) => {
+    setFilters(prev => ({ ...prev, [name]: value }));
   };
 
-  const getExpiryColor = (expiryTime) => {
+  const clearFilters = () => {
+    setFilters({
+      foodName: '',
+      category: '',
+      location: '',
+      sortBy: 'createdAt'
+    });
+  };
+
+  const getExpiryColor = (expiryDate) => {
     const now = new Date();
-    const expiry = new Date(expiryTime);
+    const expiry = new Date(expiryDate);
     const hoursUntilExpiry = (expiry - now) / (1000 * 60 * 60);
-
-    if (hoursUntilExpiry <= 6) return 'badge-danger';
-    if (hoursUntilExpiry <= 24) return 'badge-warning';
-    return 'badge-success';
+    
+    if (hoursUntilExpiry < 24) return 'text-red-600';
+    if (hoursUntilExpiry < 72) return 'text-orange-600';
+    return 'text-green-600';
   };
 
-  const getExpiryText = (expiryTime) => {
-    const now = new Date();
-    const expiry = new Date(expiryTime);
-    const hoursUntilExpiry = Math.floor((expiry - now) / (1000 * 60 * 60));
-
-    if (hoursUntilExpiry < 0) return 'Expired';
-    if (hoursUntilExpiry === 0) return 'Expires soon';
-    if (hoursUntilExpiry < 24) return `${hoursUntilExpiry}h left`;
-    const daysUntilExpiry = Math.floor(hoursUntilExpiry / 24);
-    return `${daysUntilExpiry}d left`;
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
   };
 
   return (
@@ -71,177 +79,201 @@ export default function BrowseFood() {
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Browse Available Food</h1>
-          <p className="text-gray-600">Discover surplus food donations from restaurants and food providers</p>
+          <p className="text-gray-600">
+            Find and claim food donations available in your area
+          </p>
         </div>
 
-        {/* Filters */}
-        <div className="card mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Search */}
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+        {/* Filter Bar */}
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Search Food
+              </label>
               <input
                 type="text"
-                placeholder="Search by food name..."
+                placeholder="Search by name..."
+                value={filters.foodName}
+                onChange={(e) => handleFilterChange('foodName', e.target.value)}
                 className="input"
-                value={filters.search}
-                onChange={(e) => handleFilterChange('search', e.target.value)}
               />
             </div>
-
-            {/* Category */}
+            
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Category
+              </label>
               <select
-                className="input"
                 value={filters.category}
                 onChange={(e) => handleFilterChange('category', e.target.value)}
+                className="input"
               >
                 <option value="">All Categories</option>
                 <option value="Prepared Meals">Prepared Meals</option>
                 <option value="Bakery">Bakery</option>
-                <option value="Fruits">Fruits</option>
-                <option value="Vegetables">Vegetables</option>
+                <option value="Fruits & Vegetables">Fruits & Vegetables</option>
                 <option value="Packaged Food">Packaged Food</option>
                 <option value="Beverages">Beverages</option>
                 <option value="Other">Other</option>
               </select>
             </div>
-
-            {/* Sort */}
+            
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
-              <select
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Location
+              </label>
+              <input
+                type="text"
+                placeholder="Enter location..."
+                value={filters.location}
+                onChange={(e) => handleFilterChange('location', e.target.value)}
                 className="input"
-                value={filters.sort}
-                onChange={(e) => handleFilterChange('sort', e.target.value)}
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Sort By
+              </label>
+              <select
+                value={filters.sortBy}
+                onChange={(e) => handleFilterChange('sortBy', e.target.value)}
+                className="input"
               >
-                <option value="-createdAt">Recently Added</option>
-                <option value="expiryTime">Expiring Soon</option>
-                <option value="-remainingQuantity">Highest Quantity</option>
+                <option value="createdAt">Most Recent</option>
+                <option value="expiryDate">Expiring Soon</option>
+                <option value="quantityAvailable">Highest Quantity</option>
               </select>
             </div>
           </div>
-
-          {/* Location Filter */}
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-            <input
-              type="text"
-              placeholder="Filter by city or area..."
-              className="input"
-              value={filters.location}
-              onChange={(e) => handleFilterChange('location', e.target.value)}
-            />
-          </div>
-
-          {/* Results count */}
-          <div className="mt-4 text-sm text-gray-600">
-            {totalCount} {totalCount === 1 ? 'listing' : 'listings'} found
-          </div>
+          
+          {(filters.foodName || filters.category || filters.location) && (
+            <div className="mt-4">
+              <button onClick={clearFilters} className="btn btn-outline text-sm">
+                Clear Filters
+              </button>
+            </div>
+          )}
         </div>
+
+        {/* Results Count */}
+        {!loading && !error && (
+          <div className="mb-4">
+            <p className="text-gray-600">
+              Showing {foodListings.length} listing{foodListings.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+        )}
 
         {/* Loading State */}
         {loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="card">
-                <div className="h-48 bg-gray-200 rounded-lg mb-4 skeleton"></div>
-                <div className="h-4 bg-gray-200 rounded mb-2 skeleton"></div>
-                <div className="h-4 bg-gray-200 rounded w-2/3 skeleton"></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="animate-pulse bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="skeleton h-40"></div>
+                <div className="p-4 space-y-3">
+                  <div className="skeleton h-6 w-3/4"></div>
+                  <div className="skeleton h-4 w-1/2"></div>
+                  <div className="skeleton h-4 w-full"></div>
+                  <div className="skeleton h-4 w-2/3"></div>
+                </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* Listings Grid */}
-        {!loading && listings.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {listings.map((listing) => (
-              <Link
-                key={listing._id}
-                to={`/food/${listing._id}`}
-                className="card hover:shadow-lg transition-shadow"
-              >
-                {/* Image Placeholder */}
-                <div className="h-48 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-lg mb-4 flex items-center justify-center">
-                  <svg className="w-24 h-24 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-
-                {/* Content */}
-                <div>
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900 flex-1">{listing.foodName}</h3>
-                    <span className={`badge ${getExpiryColor(listing.expiryTime)} ml-2 flex-shrink-0`}>
-                      {getExpiryText(listing.expiryTime)}
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{listing.description}</p>
-
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center text-gray-700">
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                      </svg>
-                      <span>{listing.category}</span>
-                    </div>
-
-                    <div className="flex items-center text-primary-600 font-medium">
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                      </svg>
-                      <span>{listing.remainingQuantity} {listing.unit} available</span>
-                    </div>
-
-                    <div className="flex items-center text-gray-600">
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <span className="truncate">{listing.pickupLocation}</span>
-                    </div>
-
-                    <div className="flex items-center text-gray-600">
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span>Pickup by {new Date(listing.pickupDeadline).toLocaleString()}</span>
-                    </div>
-                  </div>
-
-                  {listing.providerId && (
-                    <div className="mt-3 pt-3 border-t border-gray-200 text-xs text-gray-500">
-                      From: {listing.providerId.organizationName || listing.providerId.name}
-                    </div>
-                  )}
-                </div>
-              </Link>
-            ))}
+        {/* Error State */}
+        {error && !loading && (
+          <div className="bg-red-50 border border-red-200 text-red-600 rounded-lg p-6 text-center">
+            <p className="font-medium">{error}</p>
+            <button onClick={fetchFoodListings} className="btn btn-outline mt-4">
+              Try Again
+            </button>
           </div>
         )}
 
         {/* Empty State */}
-        {!loading && listings.length === 0 && (
-          <div className="text-center py-16">
-            <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        {!loading && !error && foodListings.length === 0 && (
+          <div className="bg-white rounded-lg shadow-md p-12 text-center">
+            <div className="flex justify-center mb-4">
+              <svg className="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No food listings found</h3>
-            <p className="text-gray-600 mb-6">Try adjusting your filters or check back later for new donations</p>
-            <button
-              onClick={() => setFilters({ search: '', category: '', location: '', sort: '-createdAt' })}
-              className="btn btn-outline"
-            >
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              No food listings found
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Try adjusting your filters or check back later for new listings
+            </p>
+            <button onClick={clearFilters} className="btn btn-primary">
               Clear Filters
             </button>
+          </div>
+        )}
+
+        {/* Food Listings Grid */}
+        {!loading && !error && foodListings.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {foodListings.map((food) => (
+              <Link
+                key={food.id}
+                to={`/food/${food.id}`}
+                className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+              >
+                <div className="relative">
+                  <div className="h-40 bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center">
+                    <svg className="w-16 h-16 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <div className="absolute top-2 right-2">
+                    <span className="badge badge-info">{food.category}</span>
+                  </div>
+                </div>
+
+                <div className="p-4">
+                  <h3 className="font-semibold text-lg text-gray-900 mb-1">
+                    {food.foodName}
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-3">
+                    {food.provider?.name || 'Provider'}
+                  </p>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                      <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                      </svg>
+                      <span className="font-medium">
+                        {food.quantityAvailable} {food.unit} remaining
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span>{food.location}</span>
+                    </div>
+
+                    <div className={`flex items-center gap-2 text-sm ${getExpiryColor(food.expiryDate)}`}>
+                      <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="font-medium">
+                        Expires: {formatDate(food.expiryDate)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         )}
       </div>
