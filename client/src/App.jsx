@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import SocketProvider from './context/SocketContext';
+import ErrorBoundary from './components/ui/ErrorBoundary';
 
 // Pages
 import LandingPage from './pages/public/LandingPage';
@@ -68,98 +69,100 @@ function App() {
   return (
     <SocketProvider>
       <Router>
-        <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/browse" element={<BrowseFood />} />
-        <Route path="/food/:id" element={<FoodDetail />} />
-        
-        {/* Auth Routes */}
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
-        />
+        <ErrorBoundary>
+          <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/browse" element={<BrowseFood />} />
+          <Route path="/food/:id" element={<FoodDetail />} />
+          
+          {/* Auth Routes */}
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
 
-        {/* NGO/Volunteer Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute roles={['NGO', 'VOLUNTEER']}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/claims"
-          element={
-            <ProtectedRoute roles={['NGO', 'VOLUNTEER']}>
-              <MyClaims />
-            </ProtectedRoute>
-          }
-        />
+          {/* NGO/Volunteer Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute roles={['NGO', 'VOLUNTEER']}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/claims"
+            element={
+              <ProtectedRoute roles={['NGO', 'VOLUNTEER']}>
+                <MyClaims />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Restaurant Routes */}
-        <Route
-          path="/restaurant/dashboard"
-          element={
-            <ProtectedRoute roles={['RESTAURANT']}>
-              <RestaurantDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/restaurant/listings"
-          element={
-            <ProtectedRoute roles={['RESTAURANT']}>
-              <Listings />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/restaurant/listings/create"
-          element={
-            <ProtectedRoute roles={['RESTAURANT']}>
-              <CreateListing />
-            </ProtectedRoute>
-          }
-        />
+          {/* Restaurant Routes */}
+          <Route
+            path="/restaurant/dashboard"
+            element={
+              <ProtectedRoute roles={['RESTAURANT']}>
+                <RestaurantDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/restaurant/listings"
+            element={
+              <ProtectedRoute roles={['RESTAURANT']}>
+                <Listings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/restaurant/listings/create"
+            element={
+              <ProtectedRoute roles={['RESTAURANT']}>
+                <CreateListing />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Admin Routes */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            <ProtectedRoute roles={['ADMIN']}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+          {/* Admin Routes */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute roles={['ADMIN']}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Shared Protected Routes */}
-        <Route
-          path="/notifications"
-          element={
-            <ProtectedRoute>
-              <Notifications />
-            </ProtectedRoute>
-          }
-        />
+          {/* Shared Protected Routes */}
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* 404 */}
-        <Route path="*" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-4xl">404 - Page Not Found</h1></div>} />
-      </Routes>
-    </Router>
+          {/* 404 */}
+          <Route path="*" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-4xl">404 - Page Not Found</h1></div>} />
+        </Routes>
+        </ErrorBoundary>
+      </Router>
     </SocketProvider>
   );
 }

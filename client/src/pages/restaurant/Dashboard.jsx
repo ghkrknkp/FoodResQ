@@ -55,7 +55,7 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-1/3 mb-8 skeleton"></div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="h-32 bg-gray-200 rounded-lg skeleton"></div>
               ))}
@@ -108,7 +108,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
           <div className="card">
             <p className="text-sm text-gray-600">Total Listings</p>
             <p className="text-2xl font-bold text-gray-900 mt-1">

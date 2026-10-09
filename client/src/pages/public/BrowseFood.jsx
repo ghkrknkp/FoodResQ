@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
 import api from '../../services/api';
+import FoodCardSkeleton from '../../components/ui/FoodCardSkeleton';
 
 export default function BrowseFood() {
   const [foodListings, setFoodListings] = useState([]);
@@ -173,15 +174,7 @@ export default function BrowseFood() {
         {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="animate-pulse bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="skeleton h-40"></div>
-                <div className="p-4 space-y-3">
-                  <div className="skeleton h-6 w-3/4"></div>
-                  <div className="skeleton h-4 w-1/2"></div>
-                  <div className="skeleton h-4 w-full"></div>
-                  <div className="skeleton h-4 w-2/3"></div>
-                </div>
-              </div>
+              <FoodCardSkeleton key={i} />
             ))}
           </div>
         )}
@@ -223,7 +216,7 @@ export default function BrowseFood() {
               <Link
                 key={food.id}
                 to={`/food/${food.id}`}
-                className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+                className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow fade-in"
               >
                 <div className="relative">
                   <div className="h-40 overflow-hidden">

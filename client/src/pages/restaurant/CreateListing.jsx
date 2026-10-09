@@ -11,6 +11,7 @@ export default function CreateListing() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
   const [formData, setFormData] = useState({
     foodName: '',
     category: '',
@@ -24,12 +25,44 @@ export default function CreateListing() {
     image: '',
   });
 
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'foodName':
+        return value.trim() ? null : 'Food name is required';
+      case 'category':
+        return value ? null : 'Category is required';
+      case 'quantity':
+        if (!value) return 'Quantity is required';
+        if (Number(value) <= 0) return 'Quantity must be greater than 0';
+        return null;
+      case 'expiryTime': {
+        if (!value) return 'Expiry time is required';
+        const now = new Date();
+        const expiry = new Date(value);
+        if (expiry <= now) return 'Expiry time must be in the future';
+        return null;
+      }
+      default:
+        return null;
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+    // Clear error when field is corrected
+    if (fieldErrors[name]) {
+      setFieldErrors(prev => ({ ...prev, [name]: null }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const errorMsg = validateField(name, value);
+    setFieldErrors(prev => ({ ...prev, [name]: errorMsg }));
   };
 
   const handleApplyAIResult = (aiResult) => {
@@ -45,11 +78,23 @@ export default function CreateListing() {
     e.preventDefault();
     setError('');
 
-    // Client-side validation
-    if (!formData.foodName || !formData.category || !formData.quantity || 
-        !formData.pickupLocation || !formData.availableFrom || 
-        !formData.pickupDeadline || !formData.expiryTime) {
+    // Validate all required fields
+    const fieldsToValidate = ['foodName', 'category', 'quantity', 'expiryTime'];
+    const newErrors = {};
+    fieldsToValidate.forEach((name) => {
+      const err = validateField(name, formData[name]);
+      if (err) newErrors[name] = err;
+    });
+
+    // Also check non-validated required fields
+    if (!formData.pickupLocation || !formData.availableFrom || !formData.pickupDeadline) {
       setError('Please fill in all required fields');
+      setFieldErrors(newErrors);
+      return;
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setFieldErrors(newErrors);
       return;
     }
 
@@ -107,10 +152,14 @@ export default function CreateListing() {
                 name="foodName"
                 value={formData.foodName}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 className="input w-full"
                 placeholder="e.g., Fresh Sandwiches"
                 required
               />
+              {fieldErrors.foodName && (
+                <p className="text-red-500 text-sm mt-1">{fieldErrors.foodName}</p>
+              )}
             </div>
 
             {/* Category */}
@@ -122,6 +171,7 @@ export default function CreateListing() {
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 className="input w-full"
                 required
               >
@@ -134,6 +184,9 @@ export default function CreateListing() {
                 <option value="Beverages">Beverages</option>
                 <option value="Other">Other</option>
               </select>
+              {fieldErrors.category && (
+                <p className="text-red-500 text-sm mt-1">{fieldErrors.category}</p>
+              )}
             </div>
           </div>
 
@@ -163,12 +216,16 @@ export default function CreateListing() {
                 name="quantity"
                 value={formData.quantity}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 min="1"
                 step="0.01"
                 className="input w-full"
                 placeholder="0"
                 required
               />
+              {fieldErrors.quantity && (
+                <p className="text-red-500 text-sm mt-1">{fieldErrors.quantity}</p>
+              )}
             </div>
 
             {/* Unit */}
@@ -253,9 +310,13 @@ export default function CreateListing() {
               name="expiryTime"
               value={formData.expiryTime}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="input w-full"
               required
             />
+            {fieldErrors.expiryTime && (
+              <p className="text-red-500 text-sm mt-1">{fieldErrors.expiryTime}</p>
+            )}
           </div>
 
           {/* Food Image */}
