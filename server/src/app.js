@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const path = require('path');
 const errorHandler = require('./middleware/errorHandler');
 
 // Import routes
@@ -11,6 +12,7 @@ const foodRoutes = require('./routes/foodRoutes');
 const claimRoutes = require('./routes/claimRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 const app = express();
 
@@ -61,12 +63,16 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Serve uploaded files as static assets
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/food', foodRoutes);
 app.use('/api', claimRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/ai', aiRoutes);
 
 // 404 handler
 app.use((req, res) => {

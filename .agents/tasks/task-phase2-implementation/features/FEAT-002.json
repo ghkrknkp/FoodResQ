@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Image Upload System - Install multer, create upload middleware and API endpoint, build drag-and-drop ImageUpload component, integrate into food listings with display in browse/detail views",
+  "status": "completed",
+  "steps": [
+    "Install multer package in server directory: cd server && npm install multer",
+    "Create server/src/middleware/upload.js using multer with file storage to server/uploads/ directory, 5MB size limit, jpg/png/webp file type validation", 
+    "Create server/uploads/ directory and configure Express in server/src/app.js to serve it as static files at /uploads route",
+    "Add POST /api/food/upload-image route in server/src/routes/foodRoutes.js that uses upload middleware and returns {imageUrl: '/uploads/filename.jpg'}",
+    "Create client/src/components/ui/ImageUpload.jsx - drag-and-drop component that posts to upload API, shows preview, handles loading/error states",
+    "Integrate ImageUpload component into client/src/pages/restaurant/CreateListing.jsx form, connect to image field in food listing creation",
+    "Update client/src/pages/public/BrowseFood.jsx to display food images in cards with fallback to placeholder gradient",
+    "Update client/src/pages/food/FoodDetail.jsx to show full-size food image with fallback placeholder"
+  ],
+  "acceptance_criteria": [
+    "Food listings can be created with uploaded images that persist in database",
+    "Image upload component shows drag-and-drop interface with preview functionality", 
+    "Food browse page displays uploaded images in cards, or gradient placeholder if no image",
+    "Food detail page shows larger food image with proper fallback handling",
+    "File upload validates file types and size limits with appropriate error messages"
+  ],
+  "verification": [
+    "Test image upload API endpoint: curl -X POST http://localhost:5000/api/food/upload-image -F 'image=@test.jpg'",
+    "Create a food listing with an image upload and verify it appears in browse page",
+    "Test drag-and-drop functionality in CreateListing form",
+    "Verify images are served correctly at http://localhost:5000/uploads/[filename]",
+    "Test file validation with invalid file types and oversized files"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

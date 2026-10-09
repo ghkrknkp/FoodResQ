@@ -248,6 +248,27 @@ exports.deleteFoodListing = async (req, res, next) => {
   }
 };
 
+// @desc    Upload a food image
+// @route   POST /api/food/upload-image
+// @access  Private (Restaurant only)
+exports.uploadFoodImage = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'No image file provided',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      imageUrl: '/uploads/' + req.file.filename,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Get restaurant's own listings
 // @route   GET /api/food/my-listings
 // @access  Private (Restaurant only)

@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
+import ListingAssistant from '../../components/ai/ListingAssistant';
+import ImageUpload from '../../components/ui/ImageUpload';
 
 export default function CreateListing() {
   const { user } = useAuth();
@@ -18,7 +20,8 @@ export default function CreateListing() {
     pickupLocation: '',
     availableFrom: '',
     pickupDeadline: '',
-    expiryTime: ''
+    expiryTime: '',
+    image: '',
   });
 
   const handleChange = (e) => {
@@ -26,6 +29,15 @@ export default function CreateListing() {
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }));
+  };
+
+  const handleApplyAIResult = (aiResult) => {
+    setFormData(prev => ({
+      ...prev,
+      foodName: aiResult.suggestedTitle || prev.foodName,
+      category: aiResult.category || prev.category,
+      description: aiResult.enhancedDescription || prev.description
     }));
   };
 
@@ -72,6 +84,9 @@ export default function CreateListing() {
           <h1 className="text-3xl font-bold text-gray-900">Create New Listing</h1>
           <p className="text-gray-600 mt-2">List surplus food for redistribution</p>
         </div>
+
+        {/* AI Listing Assistant */}
+        <ListingAssistant onApplyResult={handleApplyAIResult} isLoading={loading} />
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="card">
@@ -240,6 +255,17 @@ export default function CreateListing() {
               onChange={handleChange}
               className="input w-full"
               required
+            />
+          </div>
+
+          {/* Food Image */}
+          <div className="mt-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Food Image
+            </label>
+            <ImageUpload
+              value={formData.image}
+              onChange={(url) => setFormData({ ...formData, image: url })}
             />
           </div>
 
