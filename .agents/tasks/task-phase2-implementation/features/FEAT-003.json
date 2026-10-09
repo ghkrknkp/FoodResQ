@@ -1,0 +1,31 @@
+{
+  "id": "FEAT-003",
+  "type": "feat", 
+  "description": "Enhanced Real-Time Features - Extend Socket.IO service with targeted emit helpers, add claim notification events, create SocketContext for client-side management, enable real-time updates in Dashboard and MyClaims",
+  "status": "completed",
+  "steps": [
+    "Extend server/src/services/socketService.js with emitToUser(userId, event, data) and emitToRestaurant(restaurantId, event, data) helper functions",
+    "Update server/src/controllers/claimController.js to emit claim:created to restaurant owner's room when claim is made, emit claim:status_updated to claimant's room on status changes", 
+    "Verify server/src/controllers/foodController.js emits food:status_changed event with listingId + new status on food updates",
+    "Create client/src/context/SocketContext.jsx that connects socket.io-client on login with JWT token from localStorage, exposes socket instance, disconnects on logout",
+    "Update client/src/App.jsx to wrap application with SocketContext provider",
+    "Add real-time claim notifications to client/src/pages/restaurant/Dashboard.jsx - listen for claim:created events to refresh recent claims",
+    "Add real-time status updates to client/src/pages/claims/MyClaims.jsx - listen for claim:status_updated events to update claim status in UI"
+  ],
+  "acceptance_criteria": [
+    "Socket service provides targeted messaging to specific users and restaurants", 
+    "Claim creation triggers real-time notification to restaurant owner",
+    "Claim status changes trigger real-time updates to claimant's view",
+    "Restaurant dashboard shows new claims instantly without page refresh",
+    "MyClaims page updates claim status in real-time when changed by restaurant"
+  ],
+  "verification": [
+    "Test real-time notifications across multiple browser tabs with different user accounts",
+    "Create claim as NGO and verify restaurant receives instant notification",
+    "Update claim status as restaurant and verify claimant sees real-time update",
+    "Verify socket connection includes JWT authentication token",
+    "Check browser dev tools Network tab shows WebSocket connection with proper auth"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

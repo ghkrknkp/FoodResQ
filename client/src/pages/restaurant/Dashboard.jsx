@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
 import { useAuth } from '../../context/AuthContext';
+import { useSocket } from '../../context/SocketContext';
 import api from '../../services/api';
+import DemandInsights from '../../components/ai/DemandInsights';
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const { socket } = useSocket();
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -13,6 +16,21 @@ export default function Dashboard() {
   useEffect(() => {
     fetchDashboard();
   }, []);
+
+  // Listen for new claims in real-time and refresh dashboard data
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleClaimCreated = () => {
+      fetchDashboard();
+    };
+
+    socket.on('claim:created', handleClaimCreated);
+
+    return () => {
+      socket.off('claim:created', handleClaimCreated);
+    };
+  }, [socket]);
 
   const fetchDashboard = async () => {
     try {
@@ -146,8 +164,12 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* AI Demand Insights */}
+        <DemandInsights />
+
         {/* Recent Claims */}
         <div className="card">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Claims</h2>
           <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Claims</h2>
           {dashboard?.recentClaims && dashboard.recentClaims.length > 0 ? (
             <div className="overflow-x-auto">

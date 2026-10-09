@@ -1,16 +1,37 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
+import { useSocket } from '../../context/SocketContext';
 import api from '../../services/api';
 
 export default function MyClaims() {
   const [claims, setClaims] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const { socket } = useSocket();
 
   useEffect(() => {
     fetchClaims();
   }, []);
+
+  // Listen for real-time claim status updates and patch local state
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleStatusUpdated = ({ claimId, status }) => {
+      setClaims((prev) =>
+        prev.map((claim) =>
+          claim._id === claimId ? { ...claim, status } : claim
+        )
+      );
+    };
+
+    socket.on('claim:status_updated', handleStatusUpdated);
+
+    return () => {
+      socket.off('claim:status_updated', handleStatusUpdated);
+    };
+  }, [socket]);
 
   const fetchClaims = async () => {
     try {

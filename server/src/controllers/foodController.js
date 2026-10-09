@@ -194,6 +194,10 @@ exports.updateFoodListing = async (req, res, next) => {
     const io = getIO();
     if (io) {
       io.emit('food:updated', foodListing);
+      // Emit status change event if status was included in the update
+      if (req.body.status) {
+        io.emit('food:status_changed', { listingId: foodListing._id, status: foodListing.status });
+      }
     }
 
     res.status(200).json({

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
+import SocketProvider from './context/SocketContext';
 
 // Pages
 import LandingPage from './pages/public/LandingPage';
@@ -65,8 +66,9 @@ const PublicRoute = ({ children }) => {
 
 function App() {
   return (
-    <Router>
-      <Routes>
+    <SocketProvider>
+      <Router>
+        <Routes>
         {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/browse" element={<BrowseFood />} />
@@ -158,6 +160,7 @@ function App() {
         <Route path="*" element={<div className="min-h-screen flex items-center justify-center"><h1 className="text-4xl">404 - Page Not Found</h1></div>} />
       </Routes>
     </Router>
+    </SocketProvider>
   );
 }
 

@@ -1,7 +1,7 @@
 const Claim = require('../models/Claim');
 const FoodListing = require('../models/FoodListing');
 const { createNotification } = require('../services/notificationService');
-const { getIO } = require('../services/socketService');
+const { getIO, emitToUser, emitToRestaurant } = require('../services/socketService');
 
 // @desc    Create claim for food listing
 // @route   POST /api/food/:id/claims
@@ -114,6 +114,12 @@ exports.createClaim = async (req, res, next) => {
         claim,
       });
     }
+
+    // Notify restaurant of new claim via targeted helper
+    emitToRestaurant(foodListing.providerId._id, 'claim:created', {
+      claim,
+      listing: foodListing,
+    });
 
     res.status(201).json({
       success: true,
@@ -273,6 +279,12 @@ exports.updateClaimStatus = async (req, res, next) => {
       io.to(`user:${claim.foodListingId.providerId}`).emit('claim:updated', claim);
       io.to(`user:${claim.claimantId._id}`).emit('claim:updated', claim);
     }
+
+    // Notify claimant of status update via targeted helper
+    emitToUser(claim.claimantId._id, 'claim:status_updated', {
+      claimId: claim._id,
+      status: claim.status,
+    });
 
     res.status(200).json({
       success: true,

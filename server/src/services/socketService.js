@@ -53,6 +53,11 @@ exports.initializeSocket = (server) => {
     // Join role-specific room
     socket.join(`role:${socket.user.role}`);
 
+    // Restaurant users also join a restaurant-specific room
+    if (socket.user.role === 'RESTAURANT') {
+      socket.join(`restaurant:${socket.user.id}`);
+    }
+
     // Handle disconnection
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${socket.user.name}`);
@@ -76,4 +81,26 @@ exports.getIO = () => {
     console.warn('Socket.IO not initialized');
   }
   return io;
+};
+
+/**
+ * Emit an event to a specific user's room
+ */
+exports.emitToUser = (userId, event, data) => {
+  if (!io) {
+    console.warn('Socket.IO not initialized');
+    return;
+  }
+  io.to(`user:${userId}`).emit(event, data);
+};
+
+/**
+ * Emit an event to a specific restaurant's room
+ */
+exports.emitToRestaurant = (restaurantId, event, data) => {
+  if (!io) {
+    console.warn('Socket.IO not initialized');
+    return;
+  }
+  io.to(`restaurant:${restaurantId}`).emit(event, data);
 };
