@@ -1,0 +1,24 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "AI Integration - Mount existing ListingAssistant and DemandInsights components into CreateListing and Dashboard pages, verify AI API routes are properly connected",
+  "status": "completed",
+  "steps": [
+    "Mount ListingAssistant component in client/src/pages/restaurant/CreateListing.jsx with onApplyResult callback that fills foodName, category, description form fields",
+    "Mount DemandInsights component in client/src/pages/restaurant/Dashboard.jsx below existing stats cards",
+    "Verify /api/ai routes are wired in server/src/app.js - confirm aiRoutes.js is imported and mounted at /api/ai path",
+    "Test AI endpoints return mock data: GET /api/ai/listing-suggestions and GET /api/ai/demand-insights"
+  ],
+  "acceptance_criteria": [
+    "CreateListing page displays AI assistant panel that can fill form fields when suggestions are applied",
+    "Restaurant dashboard shows demand insights charts and recommendations section",
+    "AI API endpoints respond with simulated data (no OpenAI integration required per docs)"
+  ],
+  "verification": [
+    "Navigate to restaurant CreateListing page and confirm AI assistant is visible and functional",
+    "Check restaurant dashboard displays demand insights section",
+    "Test API endpoints: curl http://localhost:5000/api/ai/listing-suggestions and curl http://localhost:5000/api/ai/demand-insights return JSON responses"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
