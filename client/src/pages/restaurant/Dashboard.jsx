@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useSocket } from '../../context/SocketContext';
 import api from '../../services/api';
 import DemandInsights from '../../components/ai/DemandInsights';
+import AnalyticsCharts from '../../components/analytics/AnalyticsCharts';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -166,6 +167,48 @@ export default function Dashboard() {
 
         {/* AI Demand Insights */}
         <DemandInsights />
+
+        {/* Analytics Charts */}
+        {(() => {
+          // categoryDistribution arrives as { CATEGORY: count } — convert to array
+          const categoryData = Object.entries(dashboard?.categoryDistribution || {}).map(
+            ([category, count]) => ({ category, count })
+          );
+
+          // listingsOverTime is [{ _id: 'YYYY-MM-DD', count }] — normalise key to `date`
+          const claimsOverTime = (dashboard?.listingsOverTime || []).map((item) => ({
+            date: item._id,
+            count: item.count,
+          }));
+
+          // Build status distribution from summary counts
+          const summary = dashboard?.summary || {};
+          const statusDistribution = [
+            { name: 'Available', value: summary.activeListings || 0 },
+            { name: 'Claimed', value: summary.claimedListings || 0 },
+            { name: 'Completed', value: summary.completedListings || 0 },
+            { name: 'Expired', value: summary.expiredListings || 0 },
+          ];
+
+          // Impact metrics derived from food redistributed
+          const totalQuantity = summary.totalFoodRedistributed || summary.foodRedistributed || 0;
+          const impactMetrics = {
+            totalQuantity,
+            co2Saved: totalQuantity * 0.5,
+            mealsEquivalent: Math.floor(totalQuantity / 0.3),
+          };
+
+          return (
+            <div className="mb-8">
+              <AnalyticsCharts
+                categoryData={categoryData}
+                claimsOverTime={claimsOverTime}
+                statusDistribution={statusDistribution}
+                impactMetrics={impactMetrics}
+              />
+            </div>
+          );
+        })()}
 
         {/* Recent Claims */}
         <div className="card">

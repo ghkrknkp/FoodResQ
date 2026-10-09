@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-004",
+  "type": "feat",
+  "description": "Analytics Dashboard - Create AnalyticsCharts component with Recharts integration showing listings by category, claims over time, status distribution, impact metrics, and CSV export functionality",
+  "status": "completed",
+  "steps": [
+    "Create client/src/components/analytics/AnalyticsCharts.jsx using Recharts library (already installed v2.10.3)",
+    "Implement BarChart for food listings by category over last 30 days using data from dashboard API",
+    "Implement LineChart for claims over time trend using historical claim data", 
+    "Implement PieChart for listing status distribution (available, claimed, completed, expired)",
+    "Add impact metrics calculations: total food redistributed (kg/portions), CO2 saved estimate (0.5kg CO2 per kg food), meals equivalent",
+    "Add CSV export button that downloads dashboard analytics data as formatted CSV file",
+    "Integrate AnalyticsCharts component into client/src/pages/restaurant/Dashboard.jsx below existing stats cards"
+  ],
+  "acceptance_criteria": [
+    "AnalyticsCharts component renders three charts using Recharts library",
+    "Charts display actual data from GET /api/dashboard/restaurant endpoint",
+    "Impact metrics show calculated values for food redistribution and environmental impact", 
+    "CSV export downloads complete dashboard data in tabular format",
+    "Charts are responsive and work on mobile/tablet viewports",
+    "Empty data states show appropriate messages when no data is available"
+  ],
+  "verification": [
+    "Navigate to restaurant dashboard and verify three charts render with data",
+    "Test CSV export button downloads file with correct data format", 
+    "Verify impact metrics calculations are accurate based on food listing quantities",
+    "Check charts are responsive on mobile viewport (375px width)",
+    "Test with account that has no data to verify empty state handling"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
