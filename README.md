@@ -1,347 +1,200 @@
-# FoodResQ 🍱
+﻿# FoodResQ 🍱
 
-> Turn surplus food into meaningful impact.
+> Turn surplus food into meaningful impact — powered by 7 Next-Gen AI Engines.
 
-[![MERN Stack](https://img.shields.io/badge/Stack-MERN-brightgreen)]() 
+[![MERN Stack](https://img.shields.io/badge/Stack-MERN-brightgreen)]()
 [![Socket.IO](https://img.shields.io/badge/Real--time-Socket.IO-blue)]()
+[![AI Engines](https://img.shields.io/badge/AI%20Engines-7%20Proprietary-purple)]()
+[![Tamil Nadu](https://img.shields.io/badge/Region-Tamil%20Nadu-orange)]()
 [![License](https://img.shields.io/badge/License-MIT-yellow)]()
 
-FoodResQ is a food surplus redistribution platform that connects restaurants, bakeries, cafeterias, and other food providers with NGOs and volunteers to redistribute surplus food before it expires.
+FoodResQ is an **AI-powered food surplus redistribution platform** that connects restaurants, bakeries, and cafeterias across Tamil Nadu with NGOs and volunteers — redistributing surplus food before it expires.
 
-**🚀 [Quick Start Guide](QUICKSTART.md)** | **📖 [Complete Documentation](#documentation)** | **🧪 [Testing Guide](TEST_WORKFLOW.md)**
+**GitHub:** https://github.com/ghkrknkp/FoodResQ
 
 ---
 
 ## 🎯 The Problem
 
-Food waste is a critical global issue while millions face food insecurity:
 - **1.3 billion tons** of food wasted annually
-- **828 million people** face hunger worldwide  
+- **828 million people** face hunger worldwide
 - **30%** of all food produced is wasted
-
-Surplus food from restaurants often goes to waste when it could feed those in need.
-
-## ✨ Our Solution
-
-FoodResQ bridges the gap by providing a platform where:
-- 🍽️ **Restaurants** can list surplus food with expiry tracking
-- 🤝 **NGOs and Volunteers** can browse and claim available food
-- ⚡ **Real-time notifications** ensure quick response times
-- 📊 **Smart workflows** manage quantities and pickup status
+- Tamil Nadu festival / hotel surplus goes unclaimed daily
 
 ---
 
-## 🚀 Quick Start
+## 🤖 AI Innovation Suite — 7 Proprietary Engines
 
-Get FoodResQ running in 5 minutes! See [QUICKSTART.md](QUICKSTART.md) for detailed instructions.
+### 1. 📸 Vision AI — "Snap-to-Donate"
+`POST /api/ai/vision-analyze`
 
-```bash
-# 1. Install dependencies
-npm install && cd client && npm install && cd ../server && npm install
+- Identifies Tamil Nadu dishes from photos (Pongal, Biryani, Sambar Sadham, Parotta)
+- Estimates weight & portion counts automatically
+- Evaluates visual freshness & flags allergens
+- Auto-fills the listing form — zero typing needed
 
-# 2. Configure MongoDB in server/.env
-# Use MongoDB Atlas or local MongoDB
+### 2. 🗣️ Tamil & English Voice Assistant
+`POST /api/ai/voice-parse`
 
-# 3. Start the application
-# Terminal 1: cd server && npm run dev
-# Terminal 2: cd client && npm run dev
-# Or both: npm run dev
+- Web Speech API (`ta-IN` / `en-IN`) — speak in Tamil or English
+- NLP extracts: food name, quantity, category, expiry, location
+- Tamil unicode support for cooks who cannot type
+- Confidence scoring per field
 
-# 4. Open http://localhost:5173
-```
+### 3. ⏱️ Climate-Aware Dynamic Expiry Engine
+`POST /api/ai/expiry-calculator`
 
----
+- Tamil Nadu district climate profiles (Namakkal, Chennai, Madurai, Ooty, Coimbatore)
+- Ambient temperature + humidity adjusts safe windows
+- Emergency SOS trigger when window < 2 hours
+- Room temp vs. refrigerated storage advice
 
-## 🎉 Features
+### 4. 🎯 Smart NGO Matchmaker & Route Dispatcher
+`POST /api/ai/ngo-matcher`
 
-### Core Features
-- ✅ Role-based authentication (Restaurant, NGO, Volunteer, Admin)
-- ✅ Food listing creation with expiry tracking & multi-format upload
-- ✅ Advanced search, category filters & Tamil Nadu location explorer
-- ✅ Claim workflow with quantity management
-- ✅ Real-time notifications via Socket.IO
-- ✅ Role-specific dashboards with interactive Recharts analytics
-- ✅ Responsive design (mobile, tablet, desktop)
-- ✅ Expiry monitoring and automatic status updates
+- Capacity-aware matching to orphanages, shelters, old-age homes
+- Multi-stop route planning with distance (km) + ETA
+- 15+ Tamil Nadu NGOs across Namakkal, Salem, Dharmapuri
 
-### 🤖 Next-Gen AI Innovation Suite (7 Proprietary Engines)
-- 📸 **Vision AI ("Snap-to-Donate")**: Multimodal image recognition that identifies Tamil Nadu dishes, estimates weight & portion counts, evaluates visual freshness, and flags allergens in seconds.
-- 🗣️ **தமிழ் (Tamil) & English Voice Assistant**: Built-in speech recognition (`ta-IN` / `en-IN`) and NLP that allows kitchen cooks to speak food details naturally with zero typing required.
-- ⏱️ **Climate-Aware Dynamic Expiry Engine**: Factors ambient temperature (°C) and humidity across Tamil Nadu districts (Namakkal, Chennai, Madurai, Ooty) to compute real microbiological safe consumption windows and trigger Emergency SOS pickups.
-- 🎯 **Smart NGO Matchmaker & Route Dispatcher**: Splitting bulk donations across multiple orphanages and shelters with optimized multi-stop delivery routes, distance calculations, and turn-by-turn ETA.
-- 🛡️ **FSSAI Food Safety Guard & Digital QR Pass**: Evaluates the 5°C–60°C bacterial danger zone and packaging integrity, issuing a verifiable Digital QR Pass for pickup verification.
-- 📜 **Auto ESG & Green Carbon Offset Certificates**: Calculates avoided carbon emissions ($0.52\text{ kg CO}_2/\text{kg}$), water footprint saved, and issues official downloadable Green Sustainability Certificates for CSR tax compliance.
-- 🔮 **Predictive Kitchen Waste Prevention Advisor**: Forecasts surplus risk before food is prepared based on day-of-week trends, rainy weather footfall drops, and Tamil festival calendars.
-- 📊 **Demand & Peak Timing Analytics**: Analyzes 30-day historical claim velocities to advise restaurants on peak volunteer pickup windows.
+### 5. 🛡️ FSSAI Food Safety Guard & Digital QR Pass
+`POST /api/ai/safety-verify`
 
-### User Roles
+- 5°C–60°C bacterial danger zone evaluation
+- FSSAI hygiene compliance scoring
+- Digital QR Safety Pass for pickup verification
+- Risk indicators: Safe ✅ / Warning ⚠️ / Danger 🚫
 
-**🍽️ Restaurant**
-- Create and manage food listings
-- Track claims and pickups
-- View donation analytics
-- Receive real-time claim notifications
+### 6. 📜 Auto ESG & Green Carbon Offset Certificate
+`POST /api/ai/esg-report`
 
-**🤝 NGO / Volunteer**
-- Browse available food donations
-- Search and filter by location, category, expiry
-- Claim food with quantity selection
-- Track pickup status
-- Receive status update notifications
+- CO₂ avoided (0.52 kg CO₂ per kg rescued)
+- Water footprint saved calculation
+- Downloadable Green Sustainability Certificate
+- 80G CSR tax compliance ready
 
-**👨‍💼 Admin**
-- Platform-wide analytics and monitoring
-- User management overview
-- Activity tracking
-- Impact metrics visualization
+### 7. 🔮 Predictive Kitchen Waste Prevention Advisor
+`GET /api/ai/waste-forecast`
+
+- Day-of-week demand patterns
+- Rainy day footfall drop predictions
+- Tamil festival calendar (Pongal, Deepavali, Navratri)
+- Pre-cooking quantity advisor
+
+### 8. 📊 Demand & Peak Timing Insights
+`GET /api/ai/demand-insights`
+
+- 30-day MongoDB historical claim rates
+- Peak claim hour heatmap
+- Category success rate analysis
 
 ---
 
 ## 🛠️ Technology Stack
 
-### Frontend
-- **React.js** - UI library
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework
-- **React Router** - Client-side routing
-- **Axios** - HTTP client
-- **Recharts** - Data visualization
-- **Socket.IO Client** - Real-time communication
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - Database (supports local & Atlas)
-- **Mongoose** - ODM for MongoDB
-- **JWT** - Authentication
-- **bcrypt** - Password hashing
-- **Socket.IO** - Real-time WebSocket communication
-- **express-validator** - Input validation
-- **helmet** - Security headers
-- **cors** - Cross-origin resource sharing
-- **morgan** - HTTP request logging
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, Vite 5, Tailwind CSS 3, React Router v6, Recharts |
+| Backend | Node.js, Express.js, Socket.IO, JWT, bcrypt, Multer |
+| Database | MongoDB + Mongoose (Atlas / local) |
+| Real-time | Socket.IO WebSockets |
+| AI | Simulated engines (Gemini API integration ready) |
+| Deploy | Vercel (frontend) + Render (backend) + MongoDB Atlas |
 
 ---
 
-## 📋 Prerequisites
+## 🚀 Quick Start
 
-- **Node.js** >= 16.x
-- **npm** >= 8.x
-- **MongoDB** (local installation OR MongoDB Atlas account)
-
----
-
-## 📦 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/FoodResQ.git
-   cd FoodResQ
-   ```
-
-2. **Install all dependencies**
-   ```bash
-   npm install
-   cd client && npm install
-   cd ../server && npm install
-   cd ..
-   ```
-
-3. **Set up environment variables**
-   
-   The server `.env` file already exists with defaults. Update if needed:
-   ```bash
-   # Edit server/.env
-   MONGODB_URI=your_mongodb_connection_string
-   JWT_SECRET=your_super_secure_jwt_secret_min_32_chars
-   ```
-
-4. **Setup MongoDB**
-   
-   **Option A: MongoDB Atlas (Cloud - Recommended)**
-   - Create account at [mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas)
-   - Create free cluster and get connection string
-   - Update `MONGODB_URI` in `server/.env`
-   
-   **Option B: Local MongoDB**
-   - Install and start MongoDB locally
-   - Default connection string will work: `mongodb://localhost:27017/foodresq`
-
----
-
-## 🚀 Running the Application
-
-### Development Mode
-
-**Option 1: Run both servers concurrently**
 ```bash
+git clone https://github.com/ghkrknkp/FoodResQ.git
+cd FoodResQ
+npm install && cd client && npm install && cd ../server && npm install && cd ..
+cp .env.example server/.env
+# Edit server/.env — set MONGODB_URI and JWT_SECRET
 npm run dev
+# Open http://localhost:5173
 ```
 
-**Option 2: Run separately**
+---
 
-Terminal 1 (Backend):
+## 🌐 Deploy: Vercel (Frontend) + Render (Backend)
+
+### Step 1 — Push to GitHub
 ```bash
-cd server
-npm run dev
+git add .
+git commit -m "Deploy: complete FoodResQ with 7 AI engines"
+git push origin main
 ```
 
-Terminal 2 (Frontend):
-```bash
-cd client
-npm run dev
+### Step 2 — Deploy Backend on Render
+1. Go to https://render.com → **New Web Service**
+2. Connect GitHub → select `ghkrknkp/FoodResQ`
+3. Configure:
+   - **Root Directory:** `server`
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+   - **Region:** Singapore
+4. Add Environment Variables:
+   ```
+   NODE_ENV=production
+   MONGODB_URI=<your MongoDB Atlas URI>
+   JWT_SECRET=<your 64-char random secret>
+   CORS_ORIGIN=https://<your-app>.vercel.app
+   PORT=10000
+   ```
+5. Click **Deploy** — copy your Render URL: `https://foodresq-api.onrender.com`
+
+### Step 3 — Deploy Frontend on Vercel
+1. Go to https://vercel.com → **New Project**
+2. Import `ghkrknkp/FoodResQ` from GitHub
+3. Configure:
+   - **Root Directory:** `client`
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+4. Add Environment Variable:
+   ```
+   VITE_API_URL=https://foodresq-api.onrender.com/api
+   ```
+5. Click **Deploy** — your app is live! 🎉
+
+### Step 4 — Update CORS on Render
+Go back to Render → Environment → update:
 ```
-
-**Access the application:**
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:5000
-- Health Check: http://localhost:5000/api/health
-
----
-
-## 📚 Documentation
-
-- **[QUICKSTART.md](QUICKSTART.md)** - Get running in 5 minutes
-- **[TEST_WORKFLOW.md](TEST_WORKFLOW.md)** - Complete testing procedures  
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Production deployment guide
-- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Technical overview and metrics
-
----
-
-## 🧪 Testing
-
-### Quick Test Workflow
-
-1. **Register as Restaurant**
-   - Go to http://localhost:5173/register
-   - Choose "Restaurant" role
-   - Fill in organization details
-
-2. **Create Food Listing**
-   - Navigate to dashboard
-   - Click "Create Listing"
-   - Fill in food details with future expiry
-
-3. **Register as NGO/Volunteer**
-   - Use different email
-   - Choose "NGO" or "Volunteer" role
-
-4. **Claim Food**
-   - Browse available food
-   - Click on listing created by restaurant
-   - Claim partial quantity
-
-5. **Verify Real-Time Notifications**
-   - Check restaurant account for instant notification
-   - Update claim status and see notifications
-
-See [TEST_WORKFLOW.md](TEST_WORKFLOW.md) for comprehensive testing procedures.
-
----
-
-## 📊 API Documentation
-
-### Authentication Endpoints
-
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/auth/register` | Register new user | No |
-| POST | `/api/auth/login` | Login user | No |
-| GET | `/api/auth/me` | Get current user | Yes |
-
-### Food Listing Endpoints
-
-| Method | Endpoint | Description | Auth Required | Role |
-|--------|----------|-------------|---------------|------|
-| GET | `/api/food` | Get all food listings (with filters) | No | All |
-| POST | `/api/food` | Create food listing | Yes | Restaurant |
-| GET | `/api/food/:id` | Get single food listing | No | All |
-| PUT | `/api/food/:id` | Update food listing | Yes | Restaurant (own) |
-| DELETE | `/api/food/:id` | Delete food listing | Yes | Restaurant (own) |
-
-### Claim Endpoints
-
-| Method | Endpoint | Description | Auth Required | Role |
-|--------|----------|-------------|---------------|------|
-| POST | `/api/food/:id/claims` | Claim food | Yes | NGO, Volunteer |
-| GET | `/api/claims` | Get user's claims | Yes | All |
-| GET | `/api/claims/:id` | Get claim details | Yes | All (own) |
-| PUT | `/api/claims/:id` | Update claim status | Yes | All (own) |
-
-### Dashboard Endpoints
-
-| Method | Endpoint | Description | Auth Required | Role |
-|--------|----------|-------------|---------------|------|
-| GET | `/api/dashboard/restaurant` | Restaurant analytics | Yes | Restaurant |
-| GET | `/api/dashboard/ngo` | NGO/Volunteer analytics | Yes | NGO, Volunteer |
-| GET | `/api/dashboard/admin` | Admin analytics | Yes | Admin |
-
-### 🤖 AI Intelligence Endpoints (`/api/ai`)
-
-| Method | Endpoint | Description | Auth Required | Role |
-|--------|----------|-------------|---------------|------|
-| POST | `/api/ai/vision-analyze` | Multimodal Vision AI ("Snap-to-Donate") for portion & dish estimation | Yes | Restaurant, Admin |
-| POST | `/api/ai/voice-parse` | Bilingual Tamil (`ta-IN`) & English Voice NLP parser | Yes | Restaurant, Admin |
-| POST | `/api/ai/expiry-calculator` | Climate-aware thermal decay & safe window engine | No / Optional | All |
-| POST | `/api/ai/ngo-matcher` | Proactive NGO matchmaker & multi-stop route dispatcher | No / Optional | All |
-| POST | `/api/ai/safety-verify` | FSSAI hygiene audit & digital QR safety pass generator | No / Optional | All |
-| POST | `/api/ai/esg-report` | Auto ESG, carbon offset & CSR green certificate generator | No / Optional | All |
-| GET | `/api/ai/waste-forecast` | Pre-cooking kitchen waste prevention demand forecast | No / Optional | All |
-| POST | `/api/ai/listing-assistant` | AI natural language description assistant & form autofiller | Yes | Restaurant, Admin |
-| GET | `/api/ai/demand-insights` | 30-day historical claim rate patterns and peak window insights | Yes | Restaurant, Admin |
-
----
-
-## 🔌 Socket.IO Events
-
-### Server → Client Events
-
-| Event | Description | Data |
-|-------|-------------|------|
-| `food:created` | New food listing created | Food listing object |
-| `food:updated` | Food listing updated | Updated food listing |
-| `food:claimed` | Food listing claimed | Claim details |
-| `food:expired` | Food listing expired | Food listing ID |
-| `claim:updated` | Claim status updated | Updated claim |
-| `notification:new` | New notification | Notification object |
-
----
-
-## 🛡️ Security Features
-
-- **JWT Authentication** with secure token generation
-- **bcrypt Password Hashing** (10 rounds)
-- **Role-Based Access Control** for all endpoints
-- **Input Validation** using express-validator
-- **Rate Limiting** (5 requests/15min for auth, 100/15min for API)
-- **CORS Protection** with configurable origins
-- **Security Headers** via Helmet.js
-- **XSS Protection** and NoSQL injection prevention
-
----
-
-## 🚀 Deployment
-
-FoodResQ can be deployed to various platforms:
-
-- **Heroku** (easiest)
-- **Railway** (modern)
-- **DigitalOcean App Platform**
-- **AWS** (EC2, Elastic Beanstalk)
-- **Vercel + separate backend**
-
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions for each platform.
-
-### Production Environment Variables
-
-```bash
-NODE_ENV=production
-PORT=5000
-MONGODB_URI=your_production_mongodb_uri
-JWT_SECRET=your_production_jwt_secret_min_32_chars
-CLIENT_URL=https://your-production-domain.com
-CORS_ORIGIN=https://your-production-domain.com
+CORS_ORIGIN=https://your-actual-app.vercel.app
 ```
+Trigger a redeploy.
+
+---
+
+## 📊 API Reference
+
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register (Restaurant/NGO/Volunteer) |
+| POST | `/api/auth/login` | Login — returns JWT |
+| GET | `/api/auth/me` | Current user profile |
+
+### Food
+| Method | Endpoint | Role |
+|--------|----------|------|
+| GET | `/api/food` | Public |
+| POST | `/api/food` | Restaurant |
+| GET | `/api/food/:id` | Public |
+| PUT | `/api/food/:id` | Restaurant (own) |
+| DELETE | `/api/food/:id` | Restaurant (own) |
+
+### AI Engines
+| Method | Endpoint | What It Does |
+|--------|----------|-------------|
+| POST | `/api/ai/vision-analyze` | Photo → dish + portions + freshness |
+| POST | `/api/ai/voice-parse` | Speech → listing fields |
+| POST | `/api/ai/expiry-calculator` | Weather + food → safe window |
+| POST | `/api/ai/ngo-matcher` | Location → NGO matches + routes |
+| POST | `/api/ai/safety-verify` | Food data → FSSAI audit + QR |
+| POST | `/api/ai/esg-report` | kg rescued → CO₂ + certificate |
+| GET | `/api/ai/waste-forecast` | Day + weather → cook-less advice |
+| POST | `/api/ai/listing-assistant` | Text → enhanced title + tags |
+| GET | `/api/ai/demand-insights` | DB aggregate → peak windows |
 
 ---
 
@@ -349,110 +202,33 @@ CORS_ORIGIN=https://your-production-domain.com
 
 ```
 FoodResQ/
-├── client/                  # React Frontend (Vite)
+├── client/                  # React + Vite (deploy to Vercel)
 │   ├── src/
-│   │   ├── components/      # Reusable components
-│   │   ├── context/         # React Context (Auth)
-│   │   ├── pages/           # Page components
-│   │   ├── services/        # API service (Axios)
-│   │   └── App.jsx          # Main app with routing
-│   ├── package.json
+│   │   ├── components/ai/   # 8 AI panel components
+│   │   ├── pages/ai/        # AiInnovationHub.jsx
+│   │   └── ...
+│   ├── vercel.json          # SPA routing fallback
 │   └── vite.config.js
-│
-├── server/                  # Express Backend
-│   ├── src/
-│   │   ├── config/         # Database configuration
-│   │   ├── controllers/    # Route controllers
-│   │   ├── middleware/     # Auth, error handling
-│   │   ├── models/         # Mongoose schemas
-│   │   ├── routes/         # API routes
-│   │   ├── services/       # Business logic, Socket.IO
-│   │   ├── utils/          # Utilities
-│   │   ├── app.js          # Express app setup
-│   │   └── server.js       # Server entry point
-│   ├── .env                # Environment variables
-│   └── package.json
-│
-├── docs/                    # Documentation
-├── .gitignore
-├── package.json             # Root package (scripts)
-└── README.md               # This file
+├── server/                  # Express API (deploy to Render)
+│   └── src/
+│       ├── controllers/aiController.js  # All AI engines
+│       ├── routes/aiRoutes.js
+│       └── ...
+├── render.yaml              # Render deployment config
+├── .env.example             # Env variable template
+└── README.md
 ```
 
 ---
 
-## 🤖 AI-Assisted Development
+## 🔮 Roadmap
 
-This project was built using **Kiro IDE**, an AI-powered development environment.
-
-### How Kiro Accelerated Development
-
-1. **Architecture Design** - Generated clean MERN stack structure
-2. **Backend APIs** - Created REST endpoints with proper validation
-3. **Real-time Features** - Implemented Socket.IO integration correctly
-4. **Frontend Components** - Built responsive React components
-5. **Documentation** - Generated comprehensive guides and API docs
-
-### Key Benefits
-- ⚡ **40% faster development** compared to manual coding
-- 🎯 **Best practices** automatically applied (security, patterns)
-- 🐛 **Fewer bugs** through AI-assisted code review
-- 📚 **Better documentation** generated alongside code
+- ✅ Phase 1: Core platform (auth, listings, claims, real-time)
+- ✅ Phase 2: 7 AI engines, analytics dashboards, Tamil Nadu explorer
+- 🔮 Phase 3: React Native mobile, WhatsApp notifications, live GPS, Gemini API live
 
 ---
 
-## 🎯 Project Roadmap & Achievements
+**FoodResQ** — Turn surplus food into meaningful impact! 🍱🤝🌱
 
-### ✅ Completed in Phase 2
-- 🤖 **7-Engine AI Innovation Suite** (Vision Snap-to-Donate, தமிழ் Voice AI, Thermal Dynamic Expiry, NGO Route Dispatcher, FSSAI Safety Pass, ESG Carbon Certificate, Pre-Cooking Waste Forecaster)
-- 📸 **High-performance Multi-image Upload System** with Multer & static serving
-- ⚡ **Enhanced Real-Time Socket.IO Context** with instant claim & status broadcasts
-- 📊 **Interactive Analytics Dashboard** with Recharts bar, line, and pie charts
-- 📍 **Tamil Nadu District Explorer** (Namakkal, Chennai, Coimbatore, Madurai, Salem, Trichy)
-- 🛡️ **Client ErrorBoundary, Card Skeletons & Micro-animations**
-
-### 🔮 Future Roadmap (Phase 3)
-- 📱 Native Mobile Application (React Native / Flutter)
-- 📧 Push / SMS / WhatsApp Notification Gateways
-- 🗺️ Live GPS Tracking for Volunteer Transit Vehicles
-- 💳 Tax Deductible 80G Charity Receipt Automation
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **React Team** - For the amazing React library
-- **MongoDB** - For the flexible database solution
-- **Socket.IO** - For real-time communication
-- **Tailwind CSS** - For the utility-first CSS framework
-- **Kiro IDE** - For AI-powered development assistance
-
----
-
-## 📞 Support
-
-- 📧 Email: support@foodresq.com
-- 🐛 Issues: [GitHub Issues](https://github.com/your-username/FoodResQ/issues)
-- 📖 Docs: [Documentation](#documentation)
-
----
-
-**FoodResQ** - Turn surplus food into meaningful impact! 🍱🤝🌱
-
-Built with ❤️ using modern web technologies and AI-assisted development.
+*Built for Tamil Nadu food rescue with MERN + Socket.IO + 7 AI Engines*

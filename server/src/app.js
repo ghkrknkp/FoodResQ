@@ -23,9 +23,20 @@ app.use(
   })
 );
 
-// CORS configuration
+// CORS configuration — supports comma-separated origins for multi-env (Vercel + local)
+const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+  .split(',')
+  .map((o) => o.trim());
+
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g., Render health checks, mobile apps)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS policy does not allow origin: ${origin}`));
+    }
+  },
   credentials: true,
 };
 app.use(cors(corsOptions));
