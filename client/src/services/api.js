@@ -1,10 +1,15 @@
 import axios from 'axios';
 
+// In production (Vercel): uses VITE_API_URL = https://foodresq-api.onrender.com/api
+// In local dev: uses Vite proxy -> http://localhost:5000/api
+const BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: false,
 });
 
 // Request interceptor to add auth token
