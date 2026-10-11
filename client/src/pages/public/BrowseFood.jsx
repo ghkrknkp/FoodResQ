@@ -5,9 +5,11 @@ import api from '../../services/api';
 import FoodCardSkeleton from '../../components/ui/FoodCardSkeleton';
 import TamilNaduLocationExplorer from '../../components/location/TamilNaduLocationExplorer';
 
+import { FALLBACK_FOOD_LISTINGS } from '../../data/fallbackFoods';
+
 export default function BrowseFood() {
-  const [foodListings, setFoodListings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [foodListings, setFoodListings] = useState(FALLBACK_FOOD_LISTINGS);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
   const [filters, setFilters] = useState({
@@ -16,6 +18,21 @@ export default function BrowseFood() {
     location: '',
     sortBy: 'createdAt'
   });
+
+  const getFilteredFallback = () => {
+    return FALLBACK_FOOD_LISTINGS.filter((item) => {
+      if (filters.foodName && !item.foodName.toLowerCase().includes(filters.foodName.toLowerCase())) {
+        return false;
+      }
+      if (filters.category && item.category !== filters.category) {
+        return false;
+      }
+      if (filters.location && !item.pickupLocation.toLowerCase().includes(filters.location.toLowerCase())) {
+        return false;
+      }
+      return true;
+    });
+  };
 
   useEffect(() => {
     fetchFoodListings();
@@ -34,12 +51,14 @@ export default function BrowseFood() {
       if (filters.sortBy) params.append('sortBy', filters.sortBy);
       
       const response = await api.get(`/food?${params.toString()}`);
-      if (response.data.success) {
-        setFoodListings(response.data.data || []);
+      if (response?.data?.success && response.data.data?.length > 0) {
+        setFoodListings(response.data.data);
+      } else {
+        setFoodListings(getFilteredFallback());
       }
     } catch (err) {
-      setError('Failed to load food listings. Please try again.');
-      console.error('Error fetching food listings:', err);
+      console.warn('Food listings API notice, using fallback listings:', err?.message);
+      setFoodListings(getFilteredFallback());
     } finally {
       setLoading(false);
     }
@@ -173,7 +192,7 @@ export default function BrowseFood() {
         </div>
 
         {/* Results Count */}
-        {!loading && !error && (
+        {!loading && (
           <div className="mb-4">
             <p className="text-gray-600">
               Showing {foodListings.length} listing{foodListings.length !== 1 ? 's' : ''}
@@ -182,7 +201,7 @@ export default function BrowseFood() {
         )}
 
         {/* Loading State */}
-        {loading && (
+        {loading && foodListings.length === 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
               <FoodCardSkeleton key={i} />
@@ -190,18 +209,8 @@ export default function BrowseFood() {
           </div>
         )}
 
-        {/* Error State */}
-        {error && !loading && (
-          <div className="bg-red-50 border border-red-200 text-red-600 rounded-lg p-6 text-center">
-            <p className="font-medium">{error}</p>
-            <button onClick={fetchFoodListings} className="btn btn-outline mt-4">
-              Try Again
-            </button>
-          </div>
-        )}
-
         {/* Empty State */}
-        {!loading && !error && foodListings.length === 0 && (
+        {!loading && foodListings.length === 0 && (
           <div className="bg-white rounded-lg shadow-md p-12 text-center">
             <div className="flex justify-center mb-4">
               <svg className="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

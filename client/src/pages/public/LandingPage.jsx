@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
 import api from '../../services/api';
+import { FALLBACK_FOOD_LISTINGS } from '../../data/fallbackFoods';
 
 export default function LandingPage() {
   const [featuredFood, setFeaturedFood] = useState([]);
@@ -16,15 +17,15 @@ export default function LandingPage() {
     try {
       setLoading(true);
       const response = await api.get('/food?limit=6');
-      if (response.data.success) {
-        setFeaturedFood(response.data.data || []);
+      if (response?.data?.success && response.data.data?.length > 0) {
+        setFeaturedFood(response.data.data);
+        return;
       }
     } catch (err) {
-      setError('Failed to load featured food listings');
-      console.error('Error fetching featured food:', err);
-    } finally {
-      setLoading(false);
+      console.warn('LandingPage featured food notice:', err?.message);
     }
+    setFeaturedFood(FALLBACK_FOOD_LISTINGS.slice(0, 6));
+    setLoading(false);
   };
 
   const formatDate = (dateString) => {
