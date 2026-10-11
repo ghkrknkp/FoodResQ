@@ -6,6 +6,7 @@ import FoodCardSkeleton from '../../components/ui/FoodCardSkeleton';
 import TamilNaduLocationExplorer from '../../components/location/TamilNaduLocationExplorer';
 
 import { FALLBACK_FOOD_LISTINGS } from '../../data/fallbackFoods';
+import { getFoodImageUrl, handleImageError } from '../../utils/imageHelper';
 
 export default function BrowseFood() {
   const [foodListings, setFoodListings] = useState(FALLBACK_FOOD_LISTINGS);
@@ -234,31 +235,22 @@ export default function BrowseFood() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {foodListings.map((food) => (
               <Link
-                key={food.id}
-                to={`/food/${food.id}`}
+                key={food.id || food._id}
+                to={`/food/${food.id || food._id}`}
                 className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow fade-in"
               >
                 <div className="relative">
-                  <div className="h-40 overflow-hidden">
+                  <div className="h-44 overflow-hidden bg-gray-100">
                     <img
-                      src={food.image ? `http://localhost:5000${food.image}` : (
-                        {
-                          'Tamil Nadu Traditional': '/images/tamil_meals.jpg',
-                          'South Indian Specials': '/images/dosa.jpg',
-                          'Prepared Meals': '/images/curry_rice.jpg',
-                          'Bakery': '/images/croissants_pastries.jpg',
-                          'Fruits': '/images/fresh_apples.jpg',
-                          'Vegetables': '/images/leafy_greens.jpg',
-                          'Fruits & Vegetables': '/images/fruits-vegetables.jpg',
-                          'Packaged Food': '/images/canned_goods.jpg'
-                        }[food.category] || '/images/other.jpg'
-                      )}
+                      src={getFoodImageUrl(food.image, food.category, food.foodName)}
+                      onError={handleImageError}
                       alt={food.foodName}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
                     />
                   </div>
                   <div className="absolute top-2 right-2">
-                    <span className="badge badge-info">{food.category}</span>
+                    <span className="badge badge-info shadow-sm">{food.category}</span>
                   </div>
                 </div>
 

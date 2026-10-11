@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 
 import { FALLBACK_FOOD_LISTINGS } from '../../data/fallbackFoods';
+import { getFoodImageUrl, handleImageError } from '../../utils/imageHelper';
 
 export default function FoodDetail() {
   const { id } = useParams();
@@ -162,20 +163,10 @@ export default function FoodDetail() {
           {/* Main Content */}
           <div className="lg:col-span-2 mb-8 lg:mb-0">
             {/* Image */}
-            <div className="h-64 lg:h-80 rounded-lg overflow-hidden mb-6">
+            <div className="h-64 lg:h-80 rounded-2xl overflow-hidden mb-6 bg-gray-100 shadow-md">
               <img
-                src={listing.image ? `http://localhost:5000${listing.image}` : (
-                  {
-                    'Tamil Nadu Traditional': '/images/tamil_meals.jpg',
-                    'South Indian Specials': '/images/dosa.jpg',
-                    'Prepared Meals': '/images/curry_rice.jpg',
-                    'Bakery': '/images/croissants_pastries.jpg',
-                    'Fruits': '/images/fresh_apples.jpg',
-                    'Vegetables': '/images/leafy_greens.jpg',
-                    'Fruits & Vegetables': '/images/fruits-vegetables.jpg',
-                    'Packaged Food': '/images/canned_goods.jpg'
-                  }[listing.category] || '/images/other.jpg'
-                )}
+                src={getFoodImageUrl(listing.image, listing.category, listing.foodName)}
+                onError={handleImageError}
                 alt={listing.foodName}
                 className="w-full h-full object-cover"
               />
