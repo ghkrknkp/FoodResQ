@@ -23,15 +23,28 @@ app.use(
   })
 );
 
-// CORS configuration — supports comma-separated origins for multi-env (Vercel + local)
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+// CORS configuration — supports live Vercel deployment, localhost, and custom CORS_ORIGIN
+const defaultOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://food-res-q-azure.vercel.app',
+];
+const envOrigins = (process.env.CORS_ORIGIN || '')
   .split(',')
-  .map((o) => o.trim());
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+const allowedOrigins = Array.from(new Set([...defaultOrigins, ...envOrigins]));
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (e.g., Render health checks, mobile apps)
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Allow requests with no origin, matched origins, any vercel.app domain, or localhost
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.includes('localhost')
+    ) {
       callback(null, true);
     } else {
       callback(new Error(`CORS policy does not allow origin: ${origin}`));

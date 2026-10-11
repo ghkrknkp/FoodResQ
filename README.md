@@ -1,7 +1,8 @@
-﻿# FoodResQ 🍱
+# FoodResQ 🍱
 
 > Turn surplus food into meaningful impact — powered by 7 Next-Gen AI Engines.
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-food--res--q--azure.vercel.app-00C7B7?style=for-the-badge&logo=vercel&logoColor=white)](https://food-res-q-azure.vercel.app/)
 [![MERN Stack](https://img.shields.io/badge/Stack-MERN-brightgreen)]()
 [![Socket.IO](https://img.shields.io/badge/Real--time-Socket.IO-blue)]()
 [![AI Engines](https://img.shields.io/badge/AI%20Engines-7%20Proprietary-purple)]()
@@ -10,7 +11,8 @@
 
 FoodResQ is an **AI-powered food surplus redistribution platform** that connects restaurants, bakeries, and cafeterias across Tamil Nadu with NGOs and volunteers — redistributing surplus food before it expires.
 
-**GitHub:** https://github.com/ghkrknkp/FoodResQ
+🌐 **Live Website:** [https://food-res-q-azure.vercel.app/](https://food-res-q-azure.vercel.app/)  
+📂 **GitHub Repository:** [https://github.com/ghkrknkp/FoodResQ](https://github.com/ghkrknkp/FoodResQ)
 
 ---
 
@@ -159,7 +161,7 @@ git push origin main
 ### Step 4 — Update CORS on Render
 Go back to Render → Environment → update:
 ```
-CORS_ORIGIN=https://your-actual-app.vercel.app
+CORS_ORIGIN=https://food-res-q-azure.vercel.app
 ```
 Trigger a redeploy.
 
