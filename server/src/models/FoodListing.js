@@ -15,12 +15,13 @@ const foodListingSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Category is required'],
     enum: [
+      'Tamil Nadu Traditional',
+      'South Indian Specials',
       'Prepared Meals',
       'Bakery',
       'Fruits',
       'Vegetables',
       'Packaged Food',
-      'Beverages',
       'Other'
     ],
   },
@@ -78,7 +79,7 @@ const foodListingSchema = new mongoose.Schema({
     ],
     default: 'AVAILABLE',
   },
-  expiryWarningNot ified: {
+  expiryWarningNotified: {
     type: Boolean,
     default: false,
   },
@@ -100,6 +101,23 @@ foodListingSchema.pre('save', function (next) {
     this.remainingQuantity = this.quantity;
   }
   next();
+});
+
+// Virtuals for frontend field compatibility
+foodListingSchema.virtual('location').get(function () {
+  return this.pickupLocation;
+});
+
+foodListingSchema.virtual('quantityAvailable').get(function () {
+  return this.remainingQuantity;
+});
+
+foodListingSchema.virtual('expiryDate').get(function () {
+  return this.expiryTime;
+});
+
+foodListingSchema.virtual('provider').get(function () {
+  return this.providerId;
 });
 
 // Virtual for checking if expiring soon

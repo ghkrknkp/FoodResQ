@@ -157,19 +157,22 @@ export default function FoodDetail() {
           <div className="lg:col-span-2 mb-8 lg:mb-0">
             {/* Image */}
             <div className="h-64 lg:h-80 rounded-lg overflow-hidden mb-6">
-              {listing.image ? (
-                <img
-                  src={`http://localhost:5000${listing.image}`}
-                  alt={listing.foodName}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center">
-                  <svg className="w-32 h-32 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-              )}
+              <img
+                src={listing.image ? `http://localhost:5000${listing.image}` : (
+                  {
+                    'Tamil Nadu Traditional': '/images/tamil_meals.jpg',
+                    'South Indian Specials': '/images/dosa.jpg',
+                    'Prepared Meals': '/images/curry_rice.jpg',
+                    'Bakery': '/images/croissants_pastries.jpg',
+                    'Fruits': '/images/fresh_apples.jpg',
+                    'Vegetables': '/images/leafy_greens.jpg',
+                    'Fruits & Vegetables': '/images/fruits-vegetables.jpg',
+                    'Packaged Food': '/images/canned_goods.jpg'
+                  }[listing.category] || '/images/other.jpg'
+                )}
+                alt={listing.foodName}
+                className="w-full h-full object-cover"
+              />
             </div>
 
             {/* Badges */}

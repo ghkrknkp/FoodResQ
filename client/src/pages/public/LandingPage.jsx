@@ -48,11 +48,15 @@ export default function LandingPage() {
           <p className="text-xl sm:text-2xl mb-8 text-white/90 max-w-3xl mx-auto">
             Connect restaurants with NGOs and volunteers to reduce food waste and feed communities
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/browse" className="btn bg-white text-secondary-600 hover:bg-gray-100">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link to="/browse" className="btn bg-white text-secondary-600 hover:bg-gray-100 font-bold">
               Browse Available Food
             </Link>
-            <Link to="/register" className="btn border-2 border-white text-white hover:bg-white/10">
+            <Link to="/ai-hub" className="btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold shadow-lg flex items-center gap-2">
+              <span>🤖</span>
+              <span>Explore AI Innovation Hub</span>
+            </Link>
+            <Link to="/register" className="btn border-2 border-white text-white hover:bg-white/10 font-bold">
               Join the Movement
             </Link>
           </div>
@@ -139,6 +143,117 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* AI Intelligence Showcase Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-950 via-gray-900 to-emerald-950 text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+              <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full">
+                ⚡ Proprietary Technology
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black text-white mt-3 tracking-tight">
+                AI-Powered <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300">Food Rescue Suite</span>
+              </h2>
+              <p className="text-base text-gray-400 mt-2 max-w-2xl">
+                FoodResQ doesn't just list food. We use 7 purpose-built AI engines to automate listings, prevent spoilage, and coordinate zero-delay distribution.
+              </p>
+            </div>
+
+            <div className="mt-6 md:mt-0">
+              <Link
+                to="/ai-hub"
+                className="btn btn-primary px-6 py-3 font-bold text-sm shadow-lg shadow-emerald-900/50 flex items-center gap-2"
+              >
+                <span>🤖 Open AI Command Center</span>
+                <span>➔</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-emerald-500/40 transition-all hover:bg-white/10 group">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                📸
+              </div>
+              <h3 className="text-base font-bold text-white mb-1">Snap-to-Donate</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Point camera at food vessels. Multimodal vision detects dishes, portion counts, and freshness in 3 seconds.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-orange-500/40 transition-all hover:bg-white/10 group">
+              <div className="w-12 h-12 rounded-xl bg-orange-500/20 text-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                🗣️
+              </div>
+              <h3 className="text-base font-bold text-white mb-1">தமிழ் Voice AI</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Local kitchen cooks speak naturally in Tamil or English. Natural language extraction fills all form fields with zero typing.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-red-500/40 transition-all hover:bg-white/10 group">
+              <div className="w-12 h-12 rounded-xl bg-red-500/20 text-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                ⏱️
+              </div>
+              <h3 className="text-base font-bold text-white mb-1">Thermal Decay Engine</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Live Tamil Nadu ambient heat and humidity tracking dynamically calculates true microbiological safe consumption hours.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-blue-500/40 transition-all hover:bg-white/10 group">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                🎯
+              </div>
+              <h3 className="text-base font-bold text-white mb-1">NGO Multi-Stop Dispatch</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Splits bulk donations (e.g. 100+ meals) across nearby orphanages and calculates optimal turnaround route loops.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-teal-500/40 transition-all hover:bg-white/10 group">
+              <div className="w-12 h-12 rounded-xl bg-teal-500/20 text-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                🛡️
+              </div>
+              <h3 className="text-base font-bold text-white mb-1">FSSAI Safety QR Pass</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Evaluates temperature danger zones and prints verified digital QR passes to authenticate food safety upon pickup.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-green-500/40 transition-all hover:bg-white/10 group">
+              <div className="w-12 h-12 rounded-xl bg-green-500/20 text-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                📜
+              </div>
+              <h3 className="text-base font-bold text-white mb-1">Green ESG Certificates</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Translates rescued food into verified CO₂ offset and water metrics with official downloadable CSR Green Certificates.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-purple-500/40 transition-all hover:bg-white/10 group">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/20 text-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                🔮
+              </div>
+              <h3 className="text-base font-bold text-white mb-1">Pre-Cooking Waste AI</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Forecasts weather and weekend demand fluctuations to advise chefs on batch prep reduction before surplus is created.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-indigo-500/40 transition-all hover:bg-white/10 group">
+              <div className="w-12 h-12 rounded-xl bg-indigo-500/20 text-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                📊
+              </div>
+              <h3 className="text-base font-bold text-white mb-1">Predictive Peak Timing</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Recommends peak hourly windows for maximum claim velocity based on 30-day historical volunteer activity patterns.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Food Listings Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -184,10 +299,23 @@ export default function LandingPage() {
                   to={`/food/${food.id}`}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
                 >
-                  <div className="h-40 bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center">
-                    <svg className="w-16 h-16 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
+                  <div className="h-40 overflow-hidden">
+                    <img
+                      src={food.image ? `http://localhost:5000${food.image}` : (
+                        {
+                          'Tamil Nadu Traditional': '/images/tamil_meals.jpg',
+                          'South Indian Specials': '/images/dosa.jpg',
+                          'Prepared Meals': '/images/curry_rice.jpg',
+                          'Bakery': '/images/croissants_pastries.jpg',
+                          'Fruits': '/images/fresh_apples.jpg',
+                          'Vegetables': '/images/leafy_greens.jpg',
+                          'Fruits & Vegetables': '/images/fruits-vegetables.jpg',
+                          'Packaged Food': '/images/canned_goods.jpg'
+                        }[food.category] || '/images/other.jpg'
+                      )}
+                      alt={food.foodName}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-lg text-gray-900 mb-2">{food.foodName}</h3>

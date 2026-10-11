@@ -32,6 +32,11 @@ export default function Navbar() {
               <Link to="/browse" className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">
                 Browse Food
               </Link>
+              <Link to="/ai-hub" className="inline-flex items-center gap-1.5 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-1 rounded-full text-xs font-bold transition-all border border-emerald-200 my-auto">
+                <span>🤖</span>
+                <span>AI Hub</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              </Link>
               {isAuthenticated && user.role === 'RESTAURANT' && (
                 <Link to="/restaurant/listings" className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors">
                   My Listings
@@ -96,6 +101,9 @@ export default function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link to="/browse" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
               Browse Food
+            </Link>
+            <Link to="/ai-hub" className="block px-3 py-2 text-emerald-700 font-bold hover:bg-emerald-50 rounded-md">
+              🤖 AI Innovation Hub
             </Link>
             {isAuthenticated ? (
               <>

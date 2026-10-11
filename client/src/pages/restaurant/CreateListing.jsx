@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
@@ -9,6 +9,7 @@ import ImageUpload from '../../components/ui/ImageUpload';
 export default function CreateListing() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
@@ -18,12 +19,18 @@ export default function CreateListing() {
     description: '',
     quantity: '',
     unit: 'kg',
-    pickupLocation: '',
+    pickupLocation: user?.address || '',
     availableFrom: '',
     pickupDeadline: '',
     expiryTime: '',
     image: '',
   });
+
+  useEffect(() => {
+    if (location.state?.aiPrefill) {
+      handleApplyAIResult(location.state.aiPrefill);
+    }
+  }, [location.state]);
 
   const validateField = (name, value) => {
     switch (name) {
@@ -66,11 +73,22 @@ export default function CreateListing() {
   };
 
   const handleApplyAIResult = (aiResult) => {
+    const now = new Date();
+    const defaultAvail = now.toISOString().slice(0, 16);
+    const defaultDeadline = new Date(now.getTime() + 4 * 3600000).toISOString().slice(0, 16);
+    const defaultExpiry = new Date(now.getTime() + 6 * 3600000).toISOString().slice(0, 16);
+
     setFormData(prev => ({
       ...prev,
-      foodName: aiResult.suggestedTitle || prev.foodName,
+      foodName: aiResult.suggestedTitle || aiResult.foodName || prev.foodName,
       category: aiResult.category || prev.category,
-      description: aiResult.enhancedDescription || prev.description
+      description: aiResult.enhancedDescription || aiResult.description || prev.description,
+      quantity: aiResult.quantity ? String(aiResult.quantity) : prev.quantity,
+      unit: aiResult.unit || prev.unit,
+      image: aiResult.image || prev.image,
+      availableFrom: prev.availableFrom || defaultAvail,
+      pickupDeadline: aiResult.pickupDeadline || prev.pickupDeadline || defaultDeadline,
+      expiryTime: aiResult.expiryTime || prev.expiryTime || defaultExpiry,
     }));
   };
 
@@ -176,12 +194,13 @@ export default function CreateListing() {
                 required
               >
                 <option value="">Select Category</option>
+                <option value="Tamil Nadu Traditional">Tamil Nadu Traditional (Meals, Sambar, Idli, Dosa)</option>
+                <option value="South Indian Specials">South Indian Specials</option>
                 <option value="Prepared Meals">Prepared Meals</option>
                 <option value="Bakery">Bakery</option>
                 <option value="Fruits">Fruits</option>
                 <option value="Vegetables">Vegetables</option>
                 <option value="Packaged Food">Packaged Food</option>
-                <option value="Beverages">Beverages</option>
                 <option value="Other">Other</option>
               </select>
               {fieldErrors.category && (

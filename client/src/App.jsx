@@ -16,6 +16,7 @@ import Listings from './pages/restaurant/Listings';
 import MyClaims from './pages/claims/MyClaims';
 import Notifications from './pages/notifications/Notifications';
 import AdminDashboard from './pages/admin/Dashboard';
+import AiInnovationHub from './pages/ai/AiInnovationHub';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, roles }) => {
@@ -75,6 +76,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/browse" element={<BrowseFood />} />
           <Route path="/food/:id" element={<FoodDetail />} />
+          <Route path="/ai-hub" element={<AiInnovationHub />} />
           
           {/* Auth Routes */}
           <Route

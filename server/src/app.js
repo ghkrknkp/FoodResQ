@@ -17,7 +17,11 @@ const aiRoutes = require('./routes/aiRoutes');
 const app = express();
 
 // Security middleware
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+);
 
 // CORS configuration
 const corsOptions = {

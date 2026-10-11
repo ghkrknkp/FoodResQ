@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
 import api from '../../services/api';
 import FoodCardSkeleton from '../../components/ui/FoodCardSkeleton';
+import TamilNaduLocationExplorer from '../../components/location/TamilNaduLocationExplorer';
 
 export default function BrowseFood() {
   const [foodListings, setFoodListings] = useState([]);
@@ -81,12 +82,19 @@ export default function BrowseFood() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Browse Available Food</h1>
           <p className="text-gray-600">
             Find and claim food donations available in your area
           </p>
         </div>
+
+        {/* Tamil Nadu Location Classifier & Steps */}
+        <TamilNaduLocationExplorer
+          selectedLocation={filters.location}
+          onSelectLocation={(loc) => handleFilterChange('location', loc)}
+          onSelectCategory={(cat) => handleFilterChange('category', cat)}
+        />
 
         {/* Filter Bar */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -97,7 +105,7 @@ export default function BrowseFood() {
               </label>
               <input
                 type="text"
-                placeholder="Search by name..."
+                placeholder="Search by name (e.g. Sambar, Idli, Dosa)..."
                 value={filters.foodName}
                 onChange={(e) => handleFilterChange('foodName', e.target.value)}
                 className="input"
@@ -114,11 +122,14 @@ export default function BrowseFood() {
                 className="input"
               >
                 <option value="">All Categories</option>
+                <option value="Tamil Nadu Traditional">Tamil Nadu Traditional (Meals, Sambar, Idli, Dosa)</option>
+                <option value="South Indian Specials">South Indian Specials</option>
                 <option value="Prepared Meals">Prepared Meals</option>
                 <option value="Bakery">Bakery</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
                 <option value="Fruits & Vegetables">Fruits & Vegetables</option>
                 <option value="Packaged Food">Packaged Food</option>
-                <option value="Beverages">Beverages</option>
                 <option value="Other">Other</option>
               </select>
             </div>
@@ -220,19 +231,22 @@ export default function BrowseFood() {
               >
                 <div className="relative">
                   <div className="h-40 overflow-hidden">
-                    {food.image ? (
-                      <img
-                        src={`http://localhost:5000${food.image}`}
-                        alt={food.foodName}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="h-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center">
-                        <svg className="w-16 h-16 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                      </div>
-                    )}
+                    <img
+                      src={food.image ? `http://localhost:5000${food.image}` : (
+                        {
+                          'Tamil Nadu Traditional': '/images/tamil_meals.jpg',
+                          'South Indian Specials': '/images/dosa.jpg',
+                          'Prepared Meals': '/images/curry_rice.jpg',
+                          'Bakery': '/images/croissants_pastries.jpg',
+                          'Fruits': '/images/fresh_apples.jpg',
+                          'Vegetables': '/images/leafy_greens.jpg',
+                          'Fruits & Vegetables': '/images/fruits-vegetables.jpg',
+                          'Packaged Food': '/images/canned_goods.jpg'
+                        }[food.category] || '/images/other.jpg'
+                      )}
+                      alt={food.foodName}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="absolute top-2 right-2">
                     <span className="badge badge-info">{food.category}</span>

@@ -100,11 +100,25 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Welcome back, {user.name}!
-          </h1>
-          <p className="text-gray-600 mt-2">Restaurant Dashboard</p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Welcome back, {user.name}!
+            </h1>
+            <p className="text-gray-600 mt-1">Restaurant Dashboard</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/ai-hub"
+              className="btn bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-700 hover:to-teal-700 text-xs px-4 py-2 font-bold flex items-center gap-2 shadow-sm"
+            >
+              <span>🤖</span>
+              <span>Open AI Innovation Hub</span>
+            </Link>
+            <Link to="/restaurant/create-listing" className="btn btn-primary text-xs px-4 py-2">
+              + New Listing
+            </Link>
+          </div>
         </div>
 
         {/* Stats Cards */}
@@ -212,7 +226,6 @@ export default function Dashboard() {
 
         {/* Recent Claims */}
         <div className="card">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Claims</h2>
           <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Claims</h2>
           {dashboard?.recentClaims && dashboard.recentClaims.length > 0 ? (
             <div className="overflow-x-auto">

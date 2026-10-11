@@ -1,0 +1,32 @@
+{
+  "project_type": "MERN stack (MongoDB + Express + React + Node.js) food redistribution platform with Socket.IO",
+  "language": "JavaScript (ES6+) with JSX for React components",
+  "build_system": "npm workspaces - server uses nodemon for development, client uses Vite build tool",
+  "test_framework": "No specific test framework mentioned in documentation - manual testing approach",
+  "build_command": "npm run dev (runs both server and client concurrently)",
+  "test_command": "Manual testing workflow - server on port 5000, client on port 5173", 
+  "verification_instructions": "1. Start server (cd server && npm run dev), 2. Start client (cd client && npm run dev), 3. Test features in browser, 4. Verify real-time functionality across multiple browser tabs",
+  "snapshot_or_generated_files": null,
+  "environment_constraints": "Server runs on port 5000, client on port 5173. MongoDB connection required (local or Atlas). Socket.IO for real-time features.",
+  "contribution_requirements": "Based on project docs - clean MVC architecture, security best practices, responsive design, real-time Socket.IO integration",
+  "key_patterns": "JWT authentication, Mongoose models, Express controllers with error handling, React functional components with hooks, Tailwind CSS styling, Socket.IO rooms for user/role targeting",
+  "relevant_files": [
+    "server/src/controllers/aiController.js",
+    "server/src/routes/aiRoutes.js", 
+    "server/src/models/FoodListing.js",
+    "server/src/services/socketService.js",
+    "server/src/controllers/foodController.js",
+    "server/src/controllers/claimController.js",
+    "server/src/app.js",
+    "client/src/pages/restaurant/CreateListing.jsx",
+    "client/src/pages/restaurant/Dashboard.jsx", 
+    "client/src/components/ai/ListingAssistant.jsx",
+    "client/src/components/ai/DemandInsights.jsx",
+    "client/src/pages/public/BrowseFood.jsx",
+    "client/src/pages/food/FoodDetail.jsx",
+    "client/src/pages/claims/MyClaims.jsx",
+    "client/src/services/api.js",
+    "client/src/App.jsx"
+  ],
+  "directory_structure": "Root level: server/ and client/ directories. Server: src/controllers, src/routes, src/models, src/services, src/middleware. Client: src/pages, src/components, src/context, src/services. Static file serving from server/uploads/ directory."
+}

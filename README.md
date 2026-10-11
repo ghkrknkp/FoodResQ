@@ -56,13 +56,23 @@ npm install && cd client && npm install && cd ../server && npm install
 
 ### Core Features
 - ✅ Role-based authentication (Restaurant, NGO, Volunteer, Admin)
-- ✅ Food listing creation with expiry tracking
-- ✅ Advanced search and filtering
+- ✅ Food listing creation with expiry tracking & multi-format upload
+- ✅ Advanced search, category filters & Tamil Nadu location explorer
 - ✅ Claim workflow with quantity management
 - ✅ Real-time notifications via Socket.IO
-- ✅ Role-specific dashboards with analytics
+- ✅ Role-specific dashboards with interactive Recharts analytics
 - ✅ Responsive design (mobile, tablet, desktop)
 - ✅ Expiry monitoring and automatic status updates
+
+### 🤖 Next-Gen AI Innovation Suite (7 Proprietary Engines)
+- 📸 **Vision AI ("Snap-to-Donate")**: Multimodal image recognition that identifies Tamil Nadu dishes, estimates weight & portion counts, evaluates visual freshness, and flags allergens in seconds.
+- 🗣️ **தமிழ் (Tamil) & English Voice Assistant**: Built-in speech recognition (`ta-IN` / `en-IN`) and NLP that allows kitchen cooks to speak food details naturally with zero typing required.
+- ⏱️ **Climate-Aware Dynamic Expiry Engine**: Factors ambient temperature (°C) and humidity across Tamil Nadu districts (Namakkal, Chennai, Madurai, Ooty) to compute real microbiological safe consumption windows and trigger Emergency SOS pickups.
+- 🎯 **Smart NGO Matchmaker & Route Dispatcher**: Splitting bulk donations across multiple orphanages and shelters with optimized multi-stop delivery routes, distance calculations, and turn-by-turn ETA.
+- 🛡️ **FSSAI Food Safety Guard & Digital QR Pass**: Evaluates the 5°C–60°C bacterial danger zone and packaging integrity, issuing a verifiable Digital QR Pass for pickup verification.
+- 📜 **Auto ESG & Green Carbon Offset Certificates**: Calculates avoided carbon emissions ($0.52\text{ kg CO}_2/\text{kg}$), water footprint saved, and issues official downloadable Green Sustainability Certificates for CSR tax compliance.
+- 🔮 **Predictive Kitchen Waste Prevention Advisor**: Forecasts surplus risk before food is prepared based on day-of-week trends, rainy weather footfall drops, and Tamil festival calendars.
+- 📊 **Demand & Peak Timing Analytics**: Analyzes 30-day historical claim velocities to advise restaurants on peak volunteer pickup windows.
 
 ### User Roles
 
@@ -266,6 +276,20 @@ See [TEST_WORKFLOW.md](TEST_WORKFLOW.md) for comprehensive testing procedures.
 | GET | `/api/dashboard/ngo` | NGO/Volunteer analytics | Yes | NGO, Volunteer |
 | GET | `/api/dashboard/admin` | Admin analytics | Yes | Admin |
 
+### 🤖 AI Intelligence Endpoints (`/api/ai`)
+
+| Method | Endpoint | Description | Auth Required | Role |
+|--------|----------|-------------|---------------|------|
+| POST | `/api/ai/vision-analyze` | Multimodal Vision AI ("Snap-to-Donate") for portion & dish estimation | Yes | Restaurant, Admin |
+| POST | `/api/ai/voice-parse` | Bilingual Tamil (`ta-IN`) & English Voice NLP parser | Yes | Restaurant, Admin |
+| POST | `/api/ai/expiry-calculator` | Climate-aware thermal decay & safe window engine | No / Optional | All |
+| POST | `/api/ai/ngo-matcher` | Proactive NGO matchmaker & multi-stop route dispatcher | No / Optional | All |
+| POST | `/api/ai/safety-verify` | FSSAI hygiene audit & digital QR safety pass generator | No / Optional | All |
+| POST | `/api/ai/esg-report` | Auto ESG, carbon offset & CSR green certificate generator | No / Optional | All |
+| GET | `/api/ai/waste-forecast` | Pre-cooking kitchen waste prevention demand forecast | No / Optional | All |
+| POST | `/api/ai/listing-assistant` | AI natural language description assistant & form autofiller | Yes | Restaurant, Admin |
+| GET | `/api/ai/demand-insights` | 30-day historical claim rate patterns and peak window insights | Yes | Restaurant, Admin |
+
 ---
 
 ## 🔌 Socket.IO Events
@@ -377,23 +401,21 @@ This project was built using **Kiro IDE**, an AI-powered development environment
 
 ---
 
-## 🎯 Future Enhancements (Phase 2+)
+## 🎯 Project Roadmap & Achievements
 
-### Planned Features
-- 🤖 AI-powered listing assistant and demand insights
-- 📸 Image upload for food listings
-- 📧 Email/SMS notifications
-- 🗺️ Maps integration with distance calculation
-- 🔍 Enhanced search with fuzzy matching
-- 📱 Mobile application (React Native)
-- 🌍 Multi-language support
+### ✅ Completed in Phase 2
+- 🤖 **7-Engine AI Innovation Suite** (Vision Snap-to-Donate, தமிழ் Voice AI, Thermal Dynamic Expiry, NGO Route Dispatcher, FSSAI Safety Pass, ESG Carbon Certificate, Pre-Cooking Waste Forecaster)
+- 📸 **High-performance Multi-image Upload System** with Multer & static serving
+- ⚡ **Enhanced Real-Time Socket.IO Context** with instant claim & status broadcasts
+- 📊 **Interactive Analytics Dashboard** with Recharts bar, line, and pie charts
+- 📍 **Tamil Nadu District Explorer** (Namakkal, Chennai, Coimbatore, Madurai, Salem, Trichy)
+- 🛡️ **Client ErrorBoundary, Card Skeletons & Micro-animations**
 
-### Technical Improvements
-- Redis caching layer
-- Automated testing suite
-- CI/CD pipeline
-- Performance monitoring
-- Load balancing
+### 🔮 Future Roadmap (Phase 3)
+- 📱 Native Mobile Application (React Native / Flutter)
+- 📧 Push / SMS / WhatsApp Notification Gateways
+- 🗺️ Live GPS Tracking for Volunteer Transit Vehicles
+- 💳 Tax Deductible 80G Charity Receipt Automation
 
 ---
 
